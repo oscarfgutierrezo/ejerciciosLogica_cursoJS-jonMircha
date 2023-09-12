@@ -165,7 +165,6 @@ const factorial = (numero = undefined) => {
 };
 factorial(8);
 
-
 // ==========> VIDEO 37 <==========
 
 // Ejercicio 12: Función que determine si un número es primo o no
@@ -219,6 +218,90 @@ const celsiusFahrenheit = (grados = undefined, unidad = undefined) => {
 };
 celsiusFahrenheit(100, "celsius");
 
-/* 15) Programa una función para convertir números de base binaria a decimal y viceversa, pe. miFuncion(100,2) devolverá 4 base 10.
-16) Programa una función que devuelva el monto final después de aplicar un descuento a una cantidad dada, pe. miFuncion(1000, 20) devolverá 800.
-17) Programa una función que dada una fecha válida determine cuantos años han pasado hasta el día de hoy, pe. miFuncion(new Date(1984,4,23)) devolverá 35 años (en 2020). */
+// ==========> VIDEO 38 <==========
+
+// Ejercicio 15: Función para convertir números de base binaria a decimal y viceversa
+const binarioDecimal = (numero = undefined, base = undefined) => {
+  if (typeof numero !== "number" || typeof base !== "number")
+    return console.warn("Por favor ingresa un número y una base válidos");
+  if (!Number.isInteger(numero) || Math.sign(numero) === -1)
+    return console.warn("Ingresa un numero entero igual o mayor que 0");
+  if (base !== 2 && base !== 10)
+    return console.warn("La base sólo puede ser binaria (2) o decimal (10)");
+
+  if (base === 2) {
+    const reg = /^[01]+$/;
+    let resultado = 0;
+    if (!reg.test(numero))
+      return console.warn(
+        "Si seleccionas la base binaria debes ingresar un número binario"
+      );
+    array = Array.from(String(numero), (num) => Number(num)).reverse();
+    array.forEach((numero, index) => {
+      resultado += 2 ** index * numero;
+    });
+    console.info(
+      `El número binario ${numero} es equivalente al número decimal ${resultado}`
+    );
+  }
+
+  if (base === 10) {
+    numeroDecimal = numero;
+    array = [];
+    do {
+      array.unshift(numeroDecimal % 2);
+      numeroDecimal = parseInt(numeroDecimal / 2);
+    } while (numeroDecimal >= 1);
+    const resultado = Number(array.join(""));
+    console.info(
+      `El número decimal ${numero} es equivalente al número binario ${resultado}`
+    );
+  }
+};
+binarioDecimal(111111, 2);
+
+// Ejercicio 16: Función para calcular el monto final después de aplicar un porcentaje de descuento
+const calcularDescuento = (numero = undefined, porcentaje = undefined) => {
+  if (typeof numero !== "number" || typeof porcentaje !== "number")
+    return console.warn(
+      "Por favor ingresa un valor y un porcentaje de descuento válidos"
+    );
+  if (Math.sign(numero) < 1)
+    return console.warn("El valor debe ser un número mayor que 0");
+  if (porcentaje < 0 || porcentaje > 100)
+    return console.warn(
+      "El porcentaje de descuento debe ser un número entre 0 y 100"
+    );
+
+  const descuento = (numero * porcentaje) / 100;
+  const valorFinal = numero - descuento;
+  console.info(
+    `Al aplicar el ${porcentaje}% de descuento sobre ${numero}, el valor final es ${valorFinal}`
+  );
+};
+calcularDescuento(1000, 20);
+
+// Ejercicio 17: Función para calcular los años que han pasado desde una fecha dada
+const aniosDesde = (fecha) => {
+  const reg = /^\d{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[0-1])$/;
+  if (!reg.test(fecha))
+    return console.warn(
+      "Por favor ingresa una fecha válida en formato YYYY-MM-DD"
+    );
+
+  const [anio, mes, dia] = fecha.split("-");
+  fechaEvaluar = new Date(anio, Number(mes) - 1, dia);
+  tiempoTranscurrido = Date.now() - fechaEvaluar.getTime();
+  if (tiempoTranscurrido < 0)
+    return console.warn("La fecha escrita aún no ha ocurrido");
+
+  aniosTranscurridos = Math.floor(tiempoTranscurrido / 31557600000);
+  aniosTranscurridos === 1
+    ? console.info(
+        `Desde la fecha ${fecha} hasta hoy ha transcurrido ${aniosTranscurridos} año`
+      )
+    : console.info(
+        `Desde la fecha ${fecha} hasta hoy han transcurrido ${aniosTranscurridos} años`
+      );
+};
+aniosDesde("1920-09-13");
