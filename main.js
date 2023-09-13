@@ -21,8 +21,10 @@ const recortarTexto = (
     return console.warn(
       "La cantidad de caracteres debe ser un número igual o mayor que 1"
     );
-
-  console.info(cadena.slice(0, cantidadCaracteres));
+  const textoRecortado = cadena.slice(0, cantidadCaracteres);
+  console.info(
+    `El texto "${cadena}" recortado hasta el caracter ${cantidadCaracteres} es: ${textoRecortado}`
+  );
 };
 recortarTexto("Hola Mundo", 5);
 
@@ -133,7 +135,7 @@ const numeroAleatorio = (min = undefined, max = undefined) => {
   do {
     numero = Math.round(Math.random() * max);
   } while (numero < min);
-  console.info(numero);
+  console.info(`Número aleatorio entre ${min} y ${max}: ${numero}`);
 };
 numeroAleatorio(500, 600);
 
@@ -261,22 +263,22 @@ const binarioDecimal = (numero = undefined, base = undefined) => {
 binarioDecimal(111111, 2);
 
 // Ejercicio 16: Función para calcular el monto final después de aplicar un porcentaje de descuento
-const calcularDescuento = (numero = undefined, porcentaje = undefined) => {
-  if (typeof numero !== "number" || typeof porcentaje !== "number")
+const calcularDescuento = (monto = undefined, porcentaje = undefined) => {
+  if (typeof monto !== "number" || typeof porcentaje !== "number")
     return console.warn(
       "Por favor ingresa un valor y un porcentaje de descuento válidos"
     );
-  if (Math.sign(numero) < 1)
+  if (Math.sign(monto) < 1)
     return console.warn("El valor debe ser un número mayor que 0");
   if (porcentaje < 0 || porcentaje > 100)
     return console.warn(
       "El porcentaje de descuento debe ser un número entre 0 y 100"
     );
 
-  const descuento = (numero * porcentaje) / 100;
-  const valorFinal = numero - descuento;
+  const descuento = (monto * porcentaje) / 100;
+  const valorFinal = monto - descuento;
   console.info(
-    `Al aplicar el ${porcentaje}% de descuento sobre ${numero}, el valor final es ${valorFinal}`
+    `Al aplicar el ${porcentaje}% de descuento sobre $${monto} se obtiene un valor final de $${valorFinal}`
   );
 };
 calcularDescuento(1000, 20);
@@ -290,12 +292,13 @@ const aniosDesde = (fecha) => {
     );
 
   const [anio, mes, dia] = fecha.split("-");
-  fechaEvaluar = new Date(anio, Number(mes) - 1, dia);
-  tiempoTranscurrido = Date.now() - fechaEvaluar.getTime();
+  const fechaEvaluar = new Date(anio, Number(mes) - 1, dia);
+  const tiempoTranscurrido = Date.now() - fechaEvaluar.getTime();
   if (tiempoTranscurrido < 0)
     return console.warn("La fecha escrita aún no ha ocurrido");
 
-  aniosTranscurridos = Math.floor(tiempoTranscurrido / 31557600000);
+  const factorConversion = 1000 * 60 * 60 * 24 * 365.25;
+  const aniosTranscurridos = Math.floor(tiempoTranscurrido / factorConversion);
   aniosTranscurridos === 1
     ? console.info(
         `Desde la fecha ${fecha} hasta hoy ha transcurrido ${aniosTranscurridos} año`
@@ -304,4 +307,44 @@ const aniosDesde = (fecha) => {
         `Desde la fecha ${fecha} hasta hoy han transcurrido ${aniosTranscurridos} años`
       );
 };
-aniosDesde("1920-09-13");
+aniosDesde("1992-12-24");
+
+// ==========> VIDEO 38 <==========
+
+// Ejercicio 18: Función que dada una cadena de texto cuente el número de vocales y consonantes.
+const contarVocalesConsonantes = (cadena = undefined) => {
+  if (!cadena || typeof cadena !== "string")
+    return console.warn("Ingresa una cadena de texto válida");
+  const regVocales = /[aeiou]/gi;
+  const regConsonates = /[b-df-hj-np-tv-z]/gi;
+  const vocales = cadena.match(regVocales)?.length || 0;
+  const consonantes = cadena.match(regConsonates)?.length || 0;
+  console.info(
+    `La cadena de texo "${cadena}" tiene ${vocales} vocales y ${consonantes} consonantes`
+  );
+};
+contarVocalesConsonantes("Fernando");
+
+// Ejercicio 19: Función que valida que una cadena de texto sea un nombre válido (Nombre Apellido)
+const validarNombre = (cadena = undefined) => {
+  if (!cadena || typeof cadena !== "string")
+    return console.warn("Ingresa una cadena de texto válida");
+  const regNombre = /^[a-z]+\s[a-z]+$/gi;
+  const nombreValido = regNombre.test(cadena);
+  nombreValido
+    ? console.info(`"${cadena}" es un nombre válido`)
+    : console.info(`"${cadena}" no es un nombre válido`);
+};
+validarNombre("Oscar Gutierrez");
+
+// Ejercicio 20: Función que valida que una cadena de texto sea un correo electrónico válido
+const validarEmail = (cadena = undefined) => {
+  if (!cadena || typeof cadena !== "string")
+    return console.warn("Ingresa una cadena de texto válida");
+  const regEmail = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/gi;
+  const emailValido = regEmail.test(cadena);
+  emailValido
+    ? console.info(`"${cadena}" es un correo válido`)
+    : console.info(`"${cadena}" no es un email válido`);
+};
+validarEmail("oscargutierrez@gmail.com");
