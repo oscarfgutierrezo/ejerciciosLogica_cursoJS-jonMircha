@@ -309,7 +309,7 @@ const aniosDesde = (fecha) => {
 };
 aniosDesde("1992-12-24");
 
-// ==========> VIDEO 38 <==========
+// ==========> VIDEO 39 <==========
 
 // Ejercicio 18: Función que dada una cadena de texto cuente el número de vocales y consonantes.
 const contarVocalesConsonantes = (cadena = undefined) => {
@@ -348,3 +348,90 @@ const validarEmail = (cadena = undefined) => {
     : console.info(`"${cadena}" no es un email válido`);
 };
 validarEmail("oscargutierrez@gmail.com");
+
+// ==========> VIDEO 40 <==========
+
+// Ejercicio 21: Función que valida que dado un array numérico devuelve otro array con los números elevados al cuadrado
+const potencia = (array = [], potencia = 1) => {
+  if (!(array instanceof Array))
+    return console.warn("Por favor ingresa un array con los números a operar");
+  if (array.length === 0)
+    return console.warn("El arreglo debe contener al menos un número a operar");
+  if (!Number.isInteger(potencia) || Math.sign(potencia) === -1)
+    return console.warn(
+      "La potencia debe ser un número entero mayor o igual que 0"
+    );
+
+  let elementosInvalidos = false;
+  for (let i = 0; i < array.length; i++) {
+    if (typeof array[i] !== "number") {
+      elementosInvalidos = true;
+      break;
+    }
+  }
+  if (elementosInvalidos)
+    return console.warn("Todos los elementos del array deben ser números");
+
+  const arrayPotencias = array.map((numero) => numero ** potencia);
+  console.info(
+    `Los números [${array}] elevados a la potencia "${potencia}" son [${arrayPotencias}]`
+  );
+};
+potencia([2, 3], 3);
+
+// Ejercicio 22: Función que valida que dado un array devuelva el número mas alto y el más bajo
+const numeroMayorMenor = (array = []) => {
+  if (!(array instanceof Array))
+    return console.warn("Ingresa un array con los números a evaluar");
+  if (array.length < 2)
+    return console.warn(
+      "El arreglo debe contener al menos dos números a evaluar"
+    );
+
+  let elementosInvalidos = false;
+  for (let i = 0; i < array.length; i++) {
+    if (typeof array[i] !== "number") {
+      elementosInvalidos = true;
+      break;
+    }
+  }
+  if (elementosInvalidos)
+    return console.warn("Todos los elementos del array deben ser números");
+
+  const arrayOrdenado = array.slice().sort((a, b) => a - b);
+  const numeroMenor = arrayOrdenado[0];
+  const numeroMayor = arrayOrdenado[arrayOrdenado.length - 1];
+  console.info(
+    `En el conjunto de números [${array}], el número menor es "${numeroMenor}" y el número mayor es "${numeroMayor}"`
+  );
+};
+numeroMayorMenor([2, 3, 4, 5, -100, 11]);
+
+// Ejercicio 23: Función que valida que dado un array de números devuelva un objeto con 2 arreglos en el primero almacena los números pares y en el segundo los impares
+const separarParesImpares = (array = []) => {
+  if (!(array instanceof Array))
+    return console.warn("Ingresa un array de números a validar");
+  if (array.length === 0)
+    return console.warn("El array debe tener al menos un número a evaluar");
+
+  let elementosInvalidos = false;
+  for (let i = 0; i < array.length; i++) {
+    if (typeof array[i] !== "number" || !Number.isInteger(array[i])) {
+      elementosInvalidos = true;
+      break;
+    }
+  }
+  if (elementosInvalidos)
+    return console.warn(
+      "Todos los elementos del array deben ser números enteros"
+    );
+
+  const numerosPares = array.filter( numero => numero % 2 === 0);
+  const numerosImpares = array.filter((numero) => numero % 2 === 1);
+  console.info(
+    `En el conjunto de números [${array}], los números pares son [${numerosPares}] y los números impares son [${numerosImpares}]`
+  );
+};
+separarParesImpares([1, 2, 3, 4, 5, 6, 7, 8, 9, 0]);
+
+
