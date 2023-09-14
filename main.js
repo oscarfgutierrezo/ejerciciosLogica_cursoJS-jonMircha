@@ -426,7 +426,7 @@ const separarParesImpares = (array = []) => {
       "Todos los elementos del array deben ser números enteros"
     );
 
-  const numerosPares = array.filter( numero => numero % 2 === 0);
+  const numerosPares = array.filter((numero) => numero % 2 === 0);
   const numerosImpares = array.filter((numero) => numero % 2 === 1);
   console.info(
     `En el conjunto de números [${array}], los números pares son [${numerosPares}] y los números impares son [${numerosImpares}]`
@@ -434,4 +434,73 @@ const separarParesImpares = (array = []) => {
 };
 separarParesImpares([1, 2, 3, 4, 5, 6, 7, 8, 9, 0]);
 
+// ==========> VIDEO 41 <==========
 
+// Ejercicio 24: Función que valida que dado un arreglo de números devuelva un objeto con dos arreglos, el primero tendrá los numeros ordenados en forma ascendente y el segundo de forma descendiente
+const ordernarNumeros = (array = []) => {
+  if (!(array instanceof Array))
+    return console.warn("Ingresa un array de números a validar");
+  if (array.length === 0)
+    return console.warn("El array debe tener al menos un número a evaluar");
+
+  let elementosInvalidos = false;
+  for (let i = 0; i < array.length; i++) {
+    if (typeof array[i] !== "number") {
+      elementosInvalidos = true;
+      break;
+    }
+  }
+  if (elementosInvalidos)
+    return console.warn("Todos los elementos del array deben ser números");
+
+  const arregloAscendente = array.slice().sort((a, b) => a - b);
+  const arregloDescendente = array.slice().sort((a, b) => b - a);
+
+  console.info({
+    "Arreglo original": array,
+    "Orden Ascendente": arregloAscendente,
+    "Orden Descendente": arregloDescendente,
+  });
+};
+ordernarNumeros([7, 5, 7, 8, 6, 15, 2, 1]);
+
+// Ejercicio 25: Función que valida que dado un arreglo de elementos, elimine los duplicados
+const eliminarDuplicados = (array = []) => {
+  if (!(array instanceof Array))
+    return console.warn("Ingresa un array de elementos a evaluar");
+  const arrayFiltrado = [];
+  for (const elemento of array) {
+    if (!arrayFiltrado.includes(elemento)) arrayFiltrado.push(elemento);
+  }
+  console.log({
+    "Array original": array,
+    "Array Filtado": arrayFiltrado,
+  });
+};
+eliminarDuplicados(["x", 10, "x", 2, "10", 10, true, true]);
+
+// Ejercicio 26: Función que valida que dado un arreglo de números obtenga el promedio
+const promedio = (array = []) => {
+  if (!(array instanceof Array))
+    return console.warn("Ingresa un array de números a validar");
+  if (array.length === 0)
+    return console.warn("El array debe tener al menos un número a evaluar");
+
+  let elementosInvalidos = false;
+  for (let i = 0; i < array.length; i++) {
+    if (typeof array[i] !== "number") {
+      elementosInvalidos = true;
+      break;
+    }
+  }
+  if (elementosInvalidos)
+    return console.warn("Todos los elementos del array deben ser números");
+
+  const suma = array.reduce( (total, numero) => total + numero, 0);
+  const promedio = suma / array.length;
+  console.info({
+    array,
+    promedio,
+  });
+};
+promedio([9, 8, 7, 6, 5, 4, 3, 2, 1, 0]);
